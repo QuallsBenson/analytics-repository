@@ -71,7 +71,7 @@ class AnalyticsTest extends PHPUnit_Framework_TestCase{
 	public function testDimensions( GoogleAnalyticsCriteria $criteria )
 	{
 
-		$criteria->groupBy( "ipAddress" );
+		$criteria->by( "ipAddress" );
 
 		$dimensions = $criteria['dimensions'];
 

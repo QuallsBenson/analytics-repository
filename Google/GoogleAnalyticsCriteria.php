@@ -444,7 +444,7 @@ class GoogleAnalyticsCriteria extends CriteriaBuilder{
 	**/
 
 
-	public function groupBy()
+	public function by()
 	{
 
 		$dimensions = func_get_args();
@@ -460,7 +460,7 @@ class GoogleAnalyticsCriteria extends CriteriaBuilder{
 			foreach( $dimensions as $d )
 			{
 
-				if( $custom->has( $d ) )
+				if( $custom && $custom->has( $d ) )
 				{
 
 					$criteria->set( $custom->get( $d ) );

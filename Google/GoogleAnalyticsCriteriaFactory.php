@@ -10,7 +10,7 @@ use RicAnthonyLee\Itemizer\ItemFactory;
 class GoogleAnalyticsCriteriaFactory{
 
 
-	public function make()
+	public static function make()
 	{
 
 		$criteria   = new GoogleAnalyticsCriteria;
