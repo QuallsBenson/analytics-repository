@@ -1,0 +1,22 @@
+{
+    "name": "quallsbenson/analytics-repository",
+    "description": "Google Analytics Repository Abstraction Layer",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Richard Lee",
+            "email": "get@coding-stuff.com"
+        }
+    ],
+    "require": {
+        "ricanthonylee/criteria": "dev-master",
+        "google/apiclient"      : "1.1.4"
+    },
+    "autoload": {
+        "psr-0" : {
+            "Quallsbenson\\Analytics\\" : ""
+        }
+    },
+    "target-dir" : "Quallsbenson/Analytics"
+}
