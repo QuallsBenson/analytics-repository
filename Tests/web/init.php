@@ -26,7 +26,7 @@ $client->addScope( $config['scopes'] );
 
 //initialize analytics service
 
-$service = new  Google_Service_Analytics($client);
+$service = new Google_Service_Analytics($client);
 
 
 // destroy token if logout set

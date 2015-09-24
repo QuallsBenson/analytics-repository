@@ -449,10 +449,12 @@ class GoogleAnalyticsCriteria extends CriteriaBuilder{
 
 		$dimensions = func_get_args();
 
+
 		$dimensions = is_array($dimensions[0]) ? $dimensions[0] : $dimensions;
 
 
 		$custom     = $this->get( "customDimensions" );
+
 
 		$this->add( "dimensions", function( $criteria, $param ) use ($dimensions, $custom){
 
@@ -489,13 +491,17 @@ class GoogleAnalyticsCriteria extends CriteriaBuilder{
 	**/
 
 
-	public function metric()
+	public function find()
 	{
 
 		$metrics = func_get_args();
 
 		$metrics = is_array($metrics[0]) ? $metrics[0] : $metrics;
 
+		//reset metrics if exists 
+		unset( $this['metrics'] );
+
+		//build new metrics collection
 		$this->add( "metrics", function( $criteria, $param ) use( $metrics ){
 
 
@@ -600,25 +606,33 @@ class GoogleAnalyticsCriteria extends CriteriaBuilder{
 		$operator = str_replace([ "contains", "containing" ], "=@", $operator, $i );
 		$operator = str_replace([ "does not contain" ], "!@", $operator, $i );
 		$operator = str_replace([ "is not equal to", "is not", "isn't", "not"], "!=", $operator, $i );
-		$operator = str_replace([ "is equal to", "equals", "is" ],    "==", $operator, $i );
+		$operator = str_replace([ "is equal to", "equals", "is" ], "==", $operator, $i );
 
 
-		if( !in_array( $operator, ["==","!=", ">", "<", ">=", "<=", "=@", "!@"] ) )
+		//if operator is 'in', and value is array, convert array
+		//into regex
+
+		if( trim($operator) === "in" )
+		{
+
+			if( !is_array( $value ) )
+			{
+				throw new InvalidArgumentException( "value for statement with 'in' operator must be an array " );
+			}
+
+			$operator = "=~";
+			$value    = "^(".implode("|", $value ).")$";
+
+		}
+
+
+		if( !in_array( $operator, ["==","!=", ">", "<", ">=", "<=", "=@", "!@", "=~"] ) )
 			throw new \InvalidArgumentException("invalid value: '".$originalOperator."' given for operator ");
 
 
 
+
 		$this->add( "filters", function( $filters, $param ) use ( $key, $value, $operator ) {
-
-			//if the parameter already exists, just update it 
-
-			if( $filters->has( $key ) )
-			{
-
-				$filters->get( $key )->setValue( $operator.$value );
-				return null;
-
-			}
 
 			//else then create the new filter parameter
 			

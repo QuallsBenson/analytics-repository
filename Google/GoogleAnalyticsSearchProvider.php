@@ -3,6 +3,9 @@
 
 use Criteria\CriteriaBuilder as Criteria;
 use Quallsbenson\Analytics\Interfaces\DatabaseProviderInterface;
+use Quallsbenson\Analytics\Interfaces\GoogleAnalyticsResultFactoryInterface;
+use Quallsbenson\Analytics\Google\GoogleAnalyticsCriteria;
+use Google_Service_Analytics_GaData;
 
 
 class GoogleAnalyticsSearchProvider implements DatabaseProviderInterface{
@@ -43,9 +46,34 @@ class GoogleAnalyticsSearchProvider implements DatabaseProviderInterface{
 				    		@$parameters["metrics"],
 				    		$options
 					);
-
-		return $results;
+  
+		return $this->createResult( $criteria, $results );
 	}
+
+
+	public function createResult( GoogleAnalyticsCriteria $criteria, Google_Service_Analytics_GaData $rawData )
+	{
+
+		return $this->getResultFactory()->make( $criteria, $rawData );
+
+	}
+
+	public function setResultFactory( GoogleAnalyticsResultFactoryInterface $factory )
+	{
+
+		$this->resultFactory = $factory;
+
+		return $this;
+
+	}
+
+	public function getResultFactory()
+	{
+
+		return $this->resultFactory;
+
+	}
+
 
 
 }

@@ -13,6 +13,10 @@
     </head>
     <body>
 
+    <h3>Original Source of User: 100.1.144.224</h3>
+
+    <?php echo HTML::table( $originalSource['columnHeaders'], $originalSource['rows'] ); ?>
+
     <h3>All Users By Medium</h3>
 
     <?php echo HTML::table( $usersByMedium['columnHeaders'], $usersByMedium['rows'] ); ?>
@@ -21,6 +25,8 @@
     <h3>New Users By Medium</h3>
 
     <?php echo HTML::table( $newUsersByMedium['columnHeaders'], $newUsersByMedium['rows'] ); ?>
+
+
 
 
     </body>

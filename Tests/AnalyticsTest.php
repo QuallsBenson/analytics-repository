@@ -29,6 +29,7 @@ class AnalyticsTest extends PHPUnit_Framework_TestCase{
 
 		});
 
+
 		return $criteria;
 
 	}
@@ -52,7 +53,7 @@ class AnalyticsTest extends PHPUnit_Framework_TestCase{
 	public function testMetrics( GoogleAnalyticsCriteria $criteria )
 	{
 
-		$criteria->metric( "sessions", "percentNewSessions" );	
+		$criteria->find( "sessions", "percentNewSessions" );	
 
 		$metrics = $criteria["metrics"];
 
