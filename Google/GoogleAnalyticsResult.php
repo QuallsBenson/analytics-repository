@@ -77,6 +77,9 @@ class GoogleAnalyticsResult extends CriteriaBuilder{
 		$columnNames = array_keys( iterator_to_array( $this['columns'] ) );
 
 
+		$raw['rows'] = $raw['rows'] ?: [];
+
+
 		foreach( $raw['rows'] as $i => $rawColumns )
 		{
 

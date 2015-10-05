@@ -6,6 +6,7 @@ use Quallsbenson\Analytics\Google\GoogleAnalyticsResultFactory as ResultFactory;
 use RicAnthonyLee\Itemizer\ItemCollectionFactory;
 use RicAnthonyLee\Itemizer\ItemFactory;
 
+
 $ga = require 'init.php';
 require 'html_helpers.php';
 
@@ -90,10 +91,6 @@ $criteria->find( "users" )
 
 
 $originalSource = $repository->findBy( $criteria );
-
-     
-
-echo $originalSource['rows'][0]['users'];    
 
 exit;       
 
