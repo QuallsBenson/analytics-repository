@@ -36,7 +36,8 @@ class GoogleAnalyticsSearchProvider implements DatabaseProviderInterface{
 		    'dimensions'  => @$parameters['dimensions'],
 		    'sort' 		  => @$parameters['sort'],
 		    'max-results' => @$parameters['max-results'],
-		    'filters'     => @$parameters['filters']
+		    'filters'     => @$parameters['filters'],
+		    'segment'     => @$parameters['segment'],
 		);
 
 		$results =  $this->service->data_ga->get(

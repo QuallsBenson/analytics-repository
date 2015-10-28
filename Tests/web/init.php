@@ -1,5 +1,7 @@
 <?php
 
+use Quallsbenson\Analytics\Google\GoogleAnalyticsSegments as Segments;
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -26,7 +28,7 @@ $client->addScope( $config['scopes'] );
 
 //initialize analytics service
 
-$service = new Google_Service_Analytics($client);
+$service  = new Google_Service_Analytics($client);
 
 
 // destroy token if logout set
@@ -70,6 +72,8 @@ if (!$client->getAccessToken()) {
     header("Location: ".$authUrl);
     die;
 }
+
+$segments = new Segments( $service->management_segments );
 
 
 return [

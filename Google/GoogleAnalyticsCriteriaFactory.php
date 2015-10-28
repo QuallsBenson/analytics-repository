@@ -5,9 +5,28 @@ use Quallsbenson\Analytics\Google\GoogleAnalyticsCriteria;
 use Quallsbenson\Analytics\Google\GoogleAnalyticsCriteriaFormatter;
 use RicAnthonyLee\Itemizer\ItemCollectionFactory;
 use RicAnthonyLee\Itemizer\ItemFactory;
+use Quallsbenson\Analytics\Google\GoogleAnalyticsSegments as Segments;
 
 
 class GoogleAnalyticsCriteriaFactory{
+
+
+	protected static $segmentManager;
+
+
+	public static function setSegmentManager( Segments $manager )
+	{
+
+		static::$segmentManager = $manager;
+
+	}
+
+	public static function getSegmentManager()
+	{
+
+		return static::$segmentManager;
+
+	}
 
 
 	public static function make()
@@ -20,7 +39,8 @@ class GoogleAnalyticsCriteriaFactory{
 
 		$criteria->setFormatter( $formatter )
 				 ->setItemFactory( $factory )
-				 ->setFactory( $collection );
+				 ->setFactory( $collection )
+				 ->setSegmentManager( static::getSegmentManager() );
 
 
 		return $criteria;

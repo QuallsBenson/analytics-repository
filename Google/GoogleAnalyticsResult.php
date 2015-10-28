@@ -110,9 +110,11 @@ class GoogleAnalyticsResult extends CriteriaBuilder{
 		$raw      = $this->getRawResult();
 
 		$headers          = $raw['columnHeaders'];
+
+		$dimensions       = isset( $criteria['dimensions'] ) ? iterator_to_array( $criteria['dimensions'] ) : [];
 		$formattedHeaders = array_merge(
-		        iterator_to_array( $criteria['dimensions'] ), 
-		        iterator_to_array( $criteria['metrics'] ) 
+		    $dimensions, 
+		    iterator_to_array( $criteria['metrics'] ) 
 		);
 
 		foreach( $headers as $header )

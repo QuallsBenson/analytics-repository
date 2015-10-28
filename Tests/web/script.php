@@ -11,6 +11,14 @@ $ga = require 'init.php';
 require 'html_helpers.php';
 
 
+Criteria::setSegmentManager( $segments );
+
+//instantiate repository (search provider)
+$repository = new Repository( $ga['service'] ); 
+
+$repository->setResultFactory( new ResultFactory );
+
+/*
 //create search criteria
 $criteria   = Criteria::make();
 
@@ -30,10 +38,7 @@ $criteria->add("customDimensions", function( $dimensions, $factory ){
 });         
 
 
-//instantiate repository (search provider)
-$repository = new Repository( $ga['service'] ); 
 
-$repository->setResultFactory( new ResultFactory );
 
 
 //find new/returning users by medium
@@ -54,6 +59,19 @@ $criteria->find( "users" );
 
 $usersByMedium    = $repository->findBy( $criteria );
 
+
+
+/*
+echo "<pre>";
+
+
+foreach( $service->management_segments->listManagementSegments() as $seg )
+{
+
+	echo get_class( $seg )."\n";
+
+}
+*/
 
 //find all converted users - grouped by ip 
 //table:
@@ -83,16 +101,19 @@ $criteria->find( "users" )
 //earliest source
       
 
-$criteria->find( "users" )
-         ->between( date('Y-m-d', time() + (60 * 60 * 24 * -360) ), date('Y-m-d') )
-         ->by( "ipAddress", "sourceMedium", "date" )
-         ->where( "dimension1", "in", ['100.1.144.224', '100.1.89.190', '100.35.17.11'] )
-         ->orderBy( "date asc" );
+$criteria = Criteria::make();
+
+
+$criteria->site( $config['site'] ) 
+         ->find( "users" )
+         ->between( "7daysAgo", date('Y-m-d') )
+         ->segment( "paidTraffic" );
 
 
 $originalSource = $repository->findBy( $criteria );
 
-exit;       
+ 
+
 
 //echo "<pre>";
 

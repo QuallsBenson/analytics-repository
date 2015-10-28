@@ -11,7 +11,7 @@ class HTML{
         foreach( $headers as $header )
         {
 
-            $table .= "<th>{$header['name']}</th>";
+            $table .= "<th>{$header}</th>";
 
         }
 

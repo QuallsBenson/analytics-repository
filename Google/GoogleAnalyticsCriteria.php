@@ -4,6 +4,7 @@
 use Criteria\CriteriaBuilder;
 use RicAnthonyLee\Itemizer\ItemFactory;
 use RicAnthonyLee\Itemizer\ItemCollectionFactory;
+use Quallsbenson\Analytics\Google\GoogleAnalyticsSegments;
 
 
 class GoogleAnalyticsCriteria extends CriteriaBuilder{
@@ -437,6 +438,31 @@ class GoogleAnalyticsCriteria extends CriteriaBuilder{
 
 	}
 
+	/**
+	* set the segment manager to allow usage of segments by aliases
+	* @return Quallsbenson\Analytics\Google\GoogleAnalyticsCriteria
+	**/
+
+	public function setSegmentManager( GoogleAnalyticsSegments $manager )
+	{
+
+		$this->segmentManager = $manager;
+		return $this;
+
+	}
+
+	/**
+	* @return Quallsbenson\Analytics\Google\GoogleAnalyticsSegments
+	**/
+
+
+	public function getSegmentManager()
+	{
+
+		return $this->segmentManager;
+
+	}
+
 
 	/**
 	* Set the dimensions that we're using to search
@@ -639,6 +665,23 @@ class GoogleAnalyticsCriteria extends CriteriaBuilder{
 			$filters->add( $param->make( "ga:".$key, $operator.$value, $key ) );
 
 		});
+
+		return $this;
+
+	}
+
+	/**
+	* set the segment ( currently accepts one temporarily )
+	* @return Quallsbenson\Analytics\Google\GoogleAnalyticsCriteria
+	**/
+
+	public function segment( $id )
+	{
+
+		$id      = ($default = $this->getSegmentManager()->getSegment( $id )) ? $default->getId() : $id;
+		
+		$segment = $this->item()->make( "segment", "gaid::{$id}", "segment" );
+		$this->addItem( $segment );
 
 		return $this;
 

@@ -77,6 +77,11 @@ class GoogleAnalyticsCriteriaFormatter implements FormatterInterface{
 					$result["filters"] = implode(",", $filters);
 
 				break;
+				case 'segment':
+
+					$result["segment"] = $i->getValue();
+
+				break;
 
 			}
 
